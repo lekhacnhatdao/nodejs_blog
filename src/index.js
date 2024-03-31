@@ -7,8 +7,15 @@ const { Console } = require('console')
 const app = express()
 const port = 3000
 
+const route = require('./routes/');
 
 app.use(express.static(path.join(__dirname, 'public')))
+
+//gui code bang submit
+app.use(express.urlencoded({ extended: true }))
+//gui code javascript
+app.use(express.json())
+
 
 //Template engine
 app.engine('hbs', hbs.engine({
@@ -22,14 +29,9 @@ app.use(morgan('combined'))
 
 //default __dirname: C:\New folder\nodejs_blog\src\
 console.log('Path: ', path.join(__dirname, 'resource/views'))
-app.get('/', (req, res) => {
 
-  res.render('home')
-})
-app.get('/news', (req, res) => {
-
-  res.render('news')
-})
+//Routes
+route(app);
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`)
